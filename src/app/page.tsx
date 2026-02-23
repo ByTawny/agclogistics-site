@@ -1,543 +1,619 @@
-import type { Metadata } from "next"
 import Link from "next/link"
+import Image from "next/image"
 import {
-  Shield,
+  AlertCircle,
   Clock,
-  MapPin,
-  CheckCircle,
-  AlertTriangle,
-  FileText,
+  ShieldCheck,
   Truck,
-  PackageCheck,
   ClipboardList,
-  Bell,
+  BarChart3,
+  PhoneCall,
+  CheckCircle2,
   ArrowRight,
-  Star,
-  Lock,
-  Award,
-  Zap,
+  MapPin,
+  Package,
+  FileCheck,
+  Thermometer,
 } from "lucide-react"
+import { CONTACT_PHONE } from "@/lib/constants"
 
-export const metadata: Metadata = {
-  title: "AGC Logistics – Logistique pharmaceutique fiable et traçable en Martinique",
-  description:
-    "AGC Logistics assure la livraison sécurisée de médicaments et dispositifs médicaux en Martinique. Traçabilité en temps réel, conformité réglementaire, service B2B pour pharmacies et cliniques.",
-}
+/* ─── Data ────────────────────────────────────────────────────────── */
 
-// ── Section : Hero ──────────────────────────────────────────────
-function HeroSection() {
+const problems = [
+  {
+    icon: AlertCircle,
+    title: "Ruptures de stock critiques",
+    desc: "Les pharmacies font face à des délais d'approvisionnement imprévisibles qui mettent en danger la continuité des soins.",
+  },
+  {
+    icon: Clock,
+    title: "Délais de livraison non maîtrisés",
+    desc: "Sans partenaire logistique dédié, la chaîne du médicament est exposée à des retards inacceptables en milieu de soins.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Exigences réglementaires strictes",
+    desc: "Le transport pharmaceutique impose des protocoles précis (chaîne du froid, traçabilité BPD) difficiles à gérer en interne.",
+  },
+]
+
+const solutions = [
+  {
+    icon: Truck,
+    title: "Livraison express sécurisée",
+    desc: "Transport dédié aux médicaments et dispositifs médicaux avec respect de la chaîne du froid et des délais garantis.",
+    color: "var(--cyan)",
+  },
+  {
+    icon: ClipboardList,
+    title: "Traçabilité en temps réel",
+    desc: "Suivi numérique complet de chaque livraison — de la pharmacie jusqu'au patient — conforme aux BPD françaises.",
+    color: "var(--coral)",
+  },
+  {
+    icon: BarChart3,
+    title: "Reporting & conformité",
+    desc: "Tableaux de bord et rapports d'activité pour vos audits réglementaires, disponibles à tout moment.",
+    color: "var(--cyan)",
+  },
+]
+
+const steps = [
+  {
+    num: "01",
+    icon: PhoneCall,
+    title: "Prise de commande",
+    desc: "La pharmacie partenaire transmet sa commande via notre interface ou par téléphone.",
+  },
+  {
+    num: "02",
+    icon: Package,
+    title: "Préparation sécurisée",
+    desc: "Colisage contrôlé avec respect de la chaîne du froid et des conditions de stockage requises.",
+  },
+  {
+    num: "03",
+    icon: Truck,
+    title: "Livraison en Martinique",
+    desc: "Nos livreurs certifiés acheminent les produits dans les délais convenus, partout sur l'île.",
+  },
+  {
+    num: "04",
+    icon: FileCheck,
+    title: "Preuve de livraison",
+    desc: "Signature électronique et rapport de traçabilité envoyés automatiquement à la pharmacie.",
+  },
+]
+
+const stats = [
+  { value: "98%", label: "Taux de livraisons dans les délais" },
+  { value: "<4h", label: "Délai moyen de livraison express" },
+  { value: "100%", label: "Conformité BPD sur chaque livraison" },
+]
+
+const credentials = [
+  "Opérateur agréé logistique pharmaceutique en Martinique",
+  "Respect strict des Bonnes Pratiques de Distribution (BPD)",
+  "Véhicules équipés et température contrôlée",
+  "Formation réglementaire continue des équipes",
+  "Couverture totale de la Martinique (972)",
+]
+
+const zones = [
+  "Fort-de-France", "Le Lamentin", "Schoelcher", "Le Robert",
+  "Trinité", "Sainte-Marie", "Le François", "Le Vauclin",
+  "Rivière-Pilote", "Le Marin", "Les Trois-Îlets", "Le Diamant",
+  "Sainte-Anne", "Sainte-Luce", "Ducos", "Rivière-Salée",
+  "Saint-Pierre", "Le Carbet", "Case-Pilote", "Basse-Pointe",
+]
+
+const testimonials = [
+  {
+    quote: "AGC Logistics a transformé notre gestion des livraisons. Fini les retards, fini le stress. La traçabilité est irréprochable.",
+    name: "Pharmacien partenaire",
+    location: "Fort-de-France",
+  },
+  {
+    quote: "Nous livrons des produits thermosensibles. Avoir un partenaire qui maîtrise la chaîne du froid est indispensable. AGC est notre solution.",
+    name: "Responsable approvisionnement",
+    location: "Le Lamentin",
+  },
+  {
+    quote: "La réactivité et le professionnalisme de l'équipe AGC nous permettent de nous concentrer sur notre cœur de métier : le soin.",
+    name: "Directeur de pharmacie",
+    location: "Le Robert",
+  },
+]
+
+/* ─── Page ────────────────────────────────────────────────────────── */
+
+export default function HomePage() {
   return (
-    <section className="relative overflow-hidden pt-24 pb-20 md:pt-32 md:pb-28 bg-gradient-hero">
-      {/* Décoration fond */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full opacity-20"
-        style={{ background: "radial-gradient(circle, #1F6FEB 0%, transparent 70%)" }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -bottom-24 -left-24 w-[400px] h-[400px] rounded-full opacity-10"
-        style={{ background: "radial-gradient(circle, #1E8E5A 0%, transparent 70%)" }}
-      />
+    <>
+      {/* ── 1. HERO ──────────────────────────────────────────────────── */}
+      <section className="bg-hero section-py pt-32 md:pt-40 overflow-hidden relative">
+        <div
+          aria-hidden="true"
+          className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full pointer-events-none"
+          style={{
+            background: "radial-gradient(circle, rgba(26,181,213,0.10) 0%, transparent 70%)",
+            transform: "translate(30%, -30%)",
+          }}
+        />
 
-      <div className="container-xl relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Texte */}
-          <div className="animate-fade-in-up">
-            <span className="badge-pill badge-blue mb-6 inline-flex">
-              <Star className="w-3.5 h-3.5" />
-              Logistique pharmaceutique Martinique
-            </span>
+        <div className="container-xl relative">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="fade-up">
+              <div className="badge badge-cyan mb-6">
+                <MapPin className="w-3 h-3" />
+                Martinique · Logistique pharmaceutique
+              </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#111827] leading-[1.1] mb-6">
-              La logistique pharmaceutique,{" "}
-              <span style={{ color: "#1F6FEB" }}>fiable</span> et{" "}
-              <span style={{ color: "#1E8E5A" }}>traçable.</span>
-            </h1>
-
-            <p className="text-lg text-[#4B5563] mb-10 max-w-lg leading-relaxed">
-              AGC Logistics sécurise la chaîne de distribution de vos médicaments et
-              dispositifs médicaux en Martinique — avec traçabilité complète et
-              conformité réglementaire garantie.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/contact" className="btn-primary">
-                Demander un rendez-vous
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link href="/services" className="btn-secondary">
-                Découvrir nos services
-              </Link>
-            </div>
-
-            {/* Trust badges */}
-            <div className="mt-10 flex flex-wrap items-center gap-6">
-              {[
-                { icon: Shield, label: "100% traçable" },
-                { icon: CheckCircle, label: "Conformité réglementaire" },
-                { icon: Clock, label: "< 24h de délai" },
-              ].map(({ icon: Icon, label }) => (
-                <div key={label} className="flex items-center gap-2 text-sm text-[#6B7280]">
-                  <Icon className="w-4 h-4 text-[#1E8E5A]" />
-                  <span className="font-medium">{label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Illustration / carte Martinique stylisée */}
-          <div className="hidden lg:flex justify-center items-center animate-float">
-            <div
-              className="relative rounded-2xl p-8 shadow-2xl"
-              style={{
-                background: "white",
-                border: "1px solid #E2E8F0",
-                boxShadow: "0 24px 80px rgba(31,111,235,0.15)",
-              }}
-            >
-              {/* Fausse carte */}
-              <div
-                className="w-[340px] h-[280px] rounded-xl flex items-center justify-center relative overflow-hidden"
-                style={{ background: "linear-gradient(135deg, #EFF6FF 0%, #F0FDF4 100%)" }}
+              <h1
+                className="text-4xl md:text-5xl xl:text-6xl font-extrabold text-[#0B3A50] mb-6"
+                style={{ letterSpacing: "-0.03em", lineHeight: 1.1 }}
               >
-                {/* SVG Martinique simplifié */}
-                <svg viewBox="0 0 200 200" className="w-48 h-48 opacity-30 absolute" fill="none">
+                La livraison pharmaceutique{" "}
+                <span style={{ color: "var(--cyan)" }}>rapide & conforme</span>{" "}
+                en Martinique
+              </h1>
+
+              <p className="text-lg text-[#374151] mb-8 max-w-xl leading-relaxed">
+                AGC Logistics assure la distribution sécurisée de médicaments et dispositifs médicaux
+                pour les pharmacies et établissements de santé de Martinique — traçabilité complète,
+                chaîne du froid maîtrisée, conformité BPD garantie.
+              </p>
+
+              <div className="flex flex-wrap gap-4">
+                <Link href="/contact" className="btn btn-primary text-base px-8 py-4">
+                  Demander un devis gratuit
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link href="/comment-ca-marche" className="btn btn-outline text-base px-8 py-4">
+                  Voir comment ça marche
+                </Link>
+              </div>
+
+              <div className="flex items-center gap-6 mt-10 flex-wrap">
+                {["Livraison J+0", "Chaîne du froid", "Conforme BPD"].map((tag) => (
+                  <div key={tag} className="flex items-center gap-2 text-sm text-[#374151]">
+                    <CheckCircle2 className="w-4 h-4 flex-shrink-0" style={{ color: "var(--cyan)" }} />
+                    {tag}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Illustration */}
+            <div className="hidden lg:flex justify-center items-center fade-up">
+              <div
+                className="relative w-full max-w-md aspect-square rounded-3xl flex items-center justify-center float"
+                style={{
+                  background: "linear-gradient(135deg, rgba(26,181,213,0.08) 0%, rgba(11,58,80,0.05) 100%)",
+                  border: "1px solid rgba(26,181,213,0.15)",
+                }}
+              >
+                <svg
+                  viewBox="0 0 400 400"
+                  width="320"
+                  height="320"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
                   <path
-                    d="M100 20 C120 25, 160 60, 155 100 C150 140, 120 170, 100 175 C80 170, 50 145, 45 110 C40 75, 60 30, 100 20 Z"
-                    fill="#1F6FEB"
+                    d="M200 80 C160 85 130 110 115 140 C100 170 105 195 110 215 C115 235 125 250 140 265 C155 280 170 295 180 310 C190 325 195 340 200 350 C205 340 215 320 230 305 C245 290 265 278 275 260 C285 242 290 220 285 198 C280 176 270 158 255 142 C240 126 220 95 200 80Z"
+                    fill="rgba(26,181,213,0.12)"
+                    stroke="rgba(26,181,213,0.4)"
+                    strokeWidth="2"
                   />
+                  {[
+                    { cx: 185, cy: 155, label: "Fort-de-France" },
+                    { cx: 220, cy: 185, label: "Lamentin" },
+                    { cx: 240, cy: 230, label: "François" },
+                    { cx: 175, cy: 270, label: "Marin" },
+                    { cx: 160, cy: 200, label: "Trois-Îlets" },
+                  ].map(({ cx, cy, label }) => (
+                    <g key={label}>
+                      <circle cx={cx} cy={cy} r="8" fill="var(--cyan)" opacity="0.9" />
+                      <circle cx={cx} cy={cy} r="14" fill="var(--cyan)" opacity="0.2" />
+                      <circle cx={cx} cy={cy} r="20" fill="var(--cyan)" opacity="0.08" />
+                    </g>
+                  ))}
+                  <g transform="translate(178, 165)">
+                    <rect x="0" y="8" width="32" height="18" rx="3" fill="#0B3A50" />
+                    <rect x="22" y="4" width="10" height="12" rx="2" fill="#0B3A50" />
+                    <circle cx="8" cy="28" r="4" fill="#1AB5D5" />
+                    <circle cx="24" cy="28" r="4" fill="#1AB5D5" />
+                  </g>
                 </svg>
 
-                {/* Pins GPS */}
-                {[
-                  { x: "30%", y: "25%", delay: "0s" },
-                  { x: "60%", y: "45%", delay: "0.5s" },
-                  { x: "45%", y: "65%", delay: "1s" },
-                  { x: "70%", y: "30%", delay: "1.5s" },
-                ].map((pin, i) => (
-                  <div
-                    key={i}
-                    className="absolute"
-                    style={{ left: pin.x, top: pin.y, animationDelay: pin.delay }}
-                  >
-                    <div
-                      className="w-8 h-8 rounded-full flex items-center justify-center"
-                      style={{ background: "#1F6FEB", boxShadow: "0 0 0 6px rgba(31,111,235,0.2)" }}
-                    >
-                      <MapPin className="w-4 h-4 text-white" />
-                    </div>
-                  </div>
-                ))}
-
-                {/* Camion */}
                 <div
-                  className="absolute bottom-6 right-6 w-12 h-12 rounded-xl flex items-center justify-center"
-                  style={{ background: "#0B3C5D" }}
+                  className="absolute -bottom-4 -right-4 card px-5 py-3 flex items-center gap-3"
+                  style={{ boxShadow: "0 8px 30px rgba(26,181,213,0.2)" }}
                 >
-                  <Truck className="w-6 h-6 text-white" />
-                </div>
-              </div>
-
-              {/* Stats overlay */}
-              <div className="mt-4 grid grid-cols-3 gap-3">
-                {[
-                  { value: "98%", label: "Dans les délais" },
-                  { value: "24h", label: "Délai moyen" },
-                  { value: "100%", label: "Traçabilité" },
-                ].map((s) => (
                   <div
-                    key={s.label}
-                    className="text-center p-2 rounded-lg"
-                    style={{ background: "#F5F7FA" }}
+                    className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
+                    style={{ background: "rgba(26,181,213,0.12)" }}
                   >
-                    <div className="text-lg font-bold text-[#0B3C5D]">{s.value}</div>
-                    <div className="text-xs text-[#6B7280]">{s.label}</div>
+                    <Thermometer className="w-5 h-5" style={{ color: "var(--cyan)" }} />
                   </div>
-                ))}
+                  <div>
+                    <div className="text-xs font-bold text-[#0B3A50]">Chaîne du froid</div>
+                    <div className="text-xs text-[#6B7280]">Contrôlée & certifiée</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  )
-}
+      </section>
 
-// ── Section : Problème ──────────────────────────────────────────
-function ProblemSection() {
-  const problems = [
-    {
-      icon: AlertTriangle,
-      title: "Manque de traçabilité",
-      desc: "Sans système de suivi dédié, la chaîne du médicament est exposée à des ruptures d'information critiques pouvant engager votre responsabilité.",
-      color: "#EF4444",
-      bg: "#FEF2F2",
-    },
-    {
-      icon: Clock,
-      title: "Retards de livraison",
-      desc: "Des délais non maîtrisés fragilisent la continuité des soins, détériorent la satisfaction patient et nuisent à votre réputation.",
-      color: "#F59E0B",
-      bg: "#FFFBEB",
-    },
-    {
-      icon: FileText,
-      title: "Charge administrative",
-      desc: "La gestion interne des tournées mobilise des ressources humaines précieuses au détriment de votre cœur de métier.",
-      color: "#6B7280",
-      bg: "#F9FAFB",
-    },
-  ]
-
-  return (
-    <section className="section-py" style={{ background: "#F5F7FA" }}>
-      <div className="container-xl">
-        <div className="text-center mb-14">
-          <span className="badge-pill badge-blue mb-4 inline-flex">Le constat</span>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#111827] mb-4">
-            Les défis de la logistique pharmaceutique
-          </h2>
-          <p className="text-[#6B7280] max-w-xl mx-auto text-lg">
-            Sans prestataire spécialisé, la distribution de médicaments expose
-            pharmacies et cliniques à des risques opérationnels et réglementaires.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {problems.map(({ icon: Icon, title, desc, color, bg }) => (
-            <div key={title} className="card-premium p-8">
-              <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
-                style={{ background: bg }}
-              >
-                <Icon className="w-6 h-6" style={{ color }} />
-              </div>
-              <h3 className="text-lg font-semibold text-[#111827] mb-3">{title}</h3>
-              <p className="text-[#6B7280] text-sm leading-relaxed">{desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ── Section : Solution ──────────────────────────────────────────
-function SolutionSection() {
-  const solutions = [
-    {
-      icon: PackageCheck,
-      title: "Livraison sécurisée",
-      desc: "Transport dédié aux produits pharmaceutiques avec respect de la chaîne du froid et des conditions réglementaires de transport.",
-      color: "#1F6FEB",
-      bg: "#EFF6FF",
-    },
-    {
-      icon: MapPin,
-      title: "Traçabilité en temps réel",
-      desc: "Chaque livraison est horodatée, documentée et accessible. Vos pharmaciens gardent le contrôle à chaque étape.",
-      color: "#1E8E5A",
-      bg: "#F0FDF4",
-    },
-    {
-      icon: Shield,
-      title: "Conformité réglementaire",
-      desc: "Nos processus sont alignés sur les exigences de l'ANSM et les bonnes pratiques de distribution pharmaceutique.",
-      color: "#0B3C5D",
-      bg: "#EFF6FF",
-    },
-  ]
-
-  return (
-    <section className="section-py bg-white">
-      <div className="container-xl">
-        <div className="text-center mb-14">
-          <span className="badge-pill badge-green mb-4 inline-flex">Notre réponse</span>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#111827] mb-4">
-            Une solution pensée pour la santé
-          </h2>
-          <p className="text-[#6B7280] max-w-xl mx-auto text-lg">
-            AGC Logistics prend en charge toute la chaîne logistique avec une expertise
-            sectorielle et une infrastructure dédiée.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          {solutions.map(({ icon: Icon, title, desc, color, bg }) => (
-            <div key={title} className="text-center group">
-              <div
-                className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 transition-transform group-hover:scale-110"
-                style={{ background: bg }}
-              >
-                <Icon className="w-8 h-8" style={{ color }} />
-              </div>
-              <h3 className="text-xl font-semibold text-[#111827] mb-3">{title}</h3>
-              <p className="text-[#6B7280] leading-relaxed">{desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ── Section : Timeline / Fonctionnement ─────────────────────────
-function HowItWorksSection() {
-  const steps = [
-    {
-      num: "1",
-      icon: ClipboardList,
-      title: "Réception commande",
-      desc: "Votre pharmacie transmet la demande de livraison via notre interface ou par appel.",
-    },
-    {
-      num: "2",
-      icon: PackageCheck,
-      title: "Préparation",
-      desc: "Le colis est préparé selon les normes pharmaceutiques en vigueur.",
-    },
-    {
-      num: "3",
-      icon: Truck,
-      title: "Livraison",
-      desc: "Notre chauffeur qualifié achemine le médicament dans les délais convenus.",
-    },
-    {
-      num: "4",
-      icon: Bell,
-      title: "Confirmation digitale",
-      desc: "La livraison est confirmée en temps réel avec preuve de remise documentée.",
-    },
-  ]
-
-  return (
-    <section className="section-py" style={{ background: "#F5F7FA" }}>
-      <div className="container-xl">
-        <div className="text-center mb-14">
-          <span className="badge-pill badge-blue mb-4 inline-flex">Processus</span>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#111827] mb-4">
-            Comment ça fonctionne ?
-          </h2>
-          <p className="text-[#6B7280] max-w-xl mx-auto text-lg">
-            Un processus simple, structuré et entièrement traçable en 4 étapes.
-          </p>
-        </div>
-
-        {/* Desktop timeline */}
-        <div className="hidden md:flex items-start gap-0 relative">
-          {steps.map(({ num, icon: Icon, title, desc }, i) => (
-            <div key={num} className="timeline-step">
-              {/* Ligne entre steps */}
-              {i < steps.length - 1 && <div className="timeline-line" />}
-
-              <div className="timeline-circle">
-                {num}
-              </div>
-              <div
-                className="p-5 rounded-2xl w-full"
-                style={{ background: "white", border: "1px solid #E2E8F0" }}
-              >
-                <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-3"
-                  style={{ background: "#EFF6FF" }}
-                >
-                  <Icon className="w-5 h-5 text-[#1F6FEB]" />
-                </div>
-                <h3 className="font-semibold text-[#111827] mb-2 text-sm">{title}</h3>
-                <p className="text-xs text-[#6B7280] leading-relaxed">{desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Mobile timeline */}
-        <div className="md:hidden flex flex-col gap-4">
-          {steps.map(({ num, icon: Icon, title, desc }) => (
-            <div key={num} className="flex gap-4 items-start">
-              <div
-                className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0"
-                style={{ background: "#1F6FEB" }}
-              >
-                {num}
-              </div>
-              <div
-                className="flex-1 p-4 rounded-xl"
-                style={{ background: "white", border: "1px solid #E2E8F0" }}
-              >
-                <div className="flex items-center gap-2 mb-1">
-                  <Icon className="w-4 h-4 text-[#1F6FEB]" />
-                  <h3 className="font-semibold text-[#111827] text-sm">{title}</h3>
-                </div>
-                <p className="text-xs text-[#6B7280]">{desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ── Section : Chiffres clés ──────────────────────────────────────
-function StatsSection() {
-  const stats = [
-    { value: "98%", label: "Livraisons dans les délais", sub: "Taux de ponctualité" },
-    { value: "< 24h", label: "Délai moyen de livraison", sub: "Sur l'île entière" },
-    { value: "100%", label: "Traçabilité garantie", sub: "Sur chaque commande" },
-    { value: "5★", label: "Satisfaction partenaires", sub: "Pharmacies & cliniques" },
-  ]
-
-  return (
-    <section className="section-py" style={{ background: "#0B3C5D" }}>
-      <div className="container-xl">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
-            Des résultats qui parlent d&apos;eux-mêmes
-          </h2>
-          <p className="text-blue-200 text-lg">
-            La confiance de nos partenaires, mesurée en chiffres.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {stats.map(({ value, label, sub }) => (
-            <div
-              key={label}
-              className="text-center p-6 rounded-2xl"
-              style={{
-                background: "rgba(255,255,255,0.07)",
-                border: "1px solid rgba(255,255,255,0.12)",
-                backdropFilter: "blur(8px)",
-              }}
-            >
-              <div className="stat-number">{value}</div>
-              <div className="mt-2 text-white font-semibold text-sm">{label}</div>
-              <div className="mt-1 text-xs" style={{ color: "rgba(255,255,255,0.55)" }}>{sub}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ── Section : Crédibilité / Conformité ──────────────────────────
-function CredibilitySection() {
-  const items = [
-    {
-      icon: Shield,
-      title: "Conformité ANSM",
-      desc: "Nos processus respectent les bonnes pratiques de distribution en gros (BPD) et les exigences de l'Agence Nationale de Sécurité du Médicament.",
-    },
-    {
-      icon: Lock,
-      title: "Données protégées",
-      desc: "Aucune donnée patient ne transite dans nos systèmes. Confidentialité médicale préservée à chaque étape de la livraison.",
-    },
-    {
-      icon: Award,
-      title: "Process certifié",
-      desc: "Protocoles de transport validés, véhicules adaptés, personnel formé aux spécificités du transport pharmaceutique.",
-    },
-    {
-      icon: Zap,
-      title: "Réactivité opérationnelle",
-      desc: "Capacité d'intervention rapide sur l'ensemble du territoire martiniquais, y compris dans les zones les plus éloignées.",
-    },
-  ]
-
-  return (
-    <section className="section-py bg-white">
-      <div className="container-xl">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <span className="badge-pill badge-green mb-5 inline-flex">Confiance & sécurité</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#111827] mb-5">
-              Une infrastructure à la hauteur des enjeux de santé
+      {/* ── 2. PROBLÈME ──────────────────────────────────────────────── */}
+      <section className="section-py bg-white">
+        <div className="container-xl">
+          <div className="text-center mb-14">
+            <div className="badge badge-coral mb-5">Le problème</div>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-[#0B3A50] mb-4">
+              La chaîne du médicament a besoin
+              <br className="hidden md:block" /> d&apos;un maillon fiable
             </h2>
-            <p className="text-[#6B7280] text-lg leading-relaxed mb-8">
-              Travailler avec AGC Logistics, c&apos;est choisir un partenaire qui comprend
-              les contraintes réglementaires et opérationnelles de la chaîne pharmaceutique.
+            <p className="text-[#6B7280] max-w-xl mx-auto text-lg">
+              En Martinique, la logistique pharmaceutique reste un défi quotidien pour les acteurs de santé.
             </p>
-            <Link href="/contact" className="btn-primary inline-flex">
-              Discuter de votre besoin
-              <ArrowRight className="w-4 h-4" />
-            </Link>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-5">
-            {items.map(({ icon: Icon, title, desc }) => (
-              <div
-                key={title}
-                className="p-6 rounded-2xl"
-                style={{ background: "#F5F7FA", border: "1px solid #E2E8F0" }}
-              >
+          <div className="grid md:grid-cols-3 gap-6">
+            {problems.map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="card p-8">
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
-                  style={{ background: "#EFF6FF" }}
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
+                  style={{ background: "rgba(242,99,85,0.10)" }}
                 >
-                  <Icon className="w-5 h-5 text-[#1F6FEB]" />
+                  <Icon className="w-6 h-6" style={{ color: "var(--coral)" }} />
                 </div>
-                <h3 className="font-semibold text-[#111827] mb-2 text-sm">{title}</h3>
-                <p className="text-xs text-[#6B7280] leading-relaxed">{desc}</p>
+                <h3 className="text-lg font-bold text-[#0B3A50] mb-3">{title}</h3>
+                <p className="text-[#6B7280] text-sm leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
         </div>
-      </div>
-    </section>
-  )
-}
+      </section>
 
-// ── Section : CTA Final ─────────────────────────────────────────
-function CtaSection() {
-  return (
-    <section
-      className="section-py"
-      style={{
-        background: "linear-gradient(135deg, #0B3C5D 0%, #1F6FEB 100%)",
-      }}
-    >
-      <div className="container-xl text-center">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-5 max-w-2xl mx-auto">
-          Optimisez votre logistique pharmaceutique dès aujourd&apos;hui.
-        </h2>
-        <p className="text-blue-100 text-lg mb-10 max-w-xl mx-auto">
-          Rejoignez les pharmacies et cliniques de Martinique qui font confiance
-          à AGC Logistics pour leur distribution.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-lg font-semibold text-[#0B3C5D] bg-white hover:bg-blue-50 transition-colors"
-          >
-            Demander un rendez-vous
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-          <Link
-            href="/services"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-lg font-semibold text-white border-2 border-white/40 hover:border-white transition-colors"
-          >
-            Voir nos services
-          </Link>
+      {/* ── 3. SOLUTION ──────────────────────────────────────────────── */}
+      <section className="section-py" style={{ background: "var(--bg)" }}>
+        <div className="container-xl">
+          <div className="text-center mb-14">
+            <div className="badge badge-cyan mb-5">Notre solution</div>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-[#0B3A50] mb-4">
+              Une logistique pharmaceutique
+              <br className="hidden md:block" /> pensée pour la Martinique
+            </h2>
+            <p className="text-[#6B7280] max-w-xl mx-auto text-lg">
+              AGC Logistics prend en charge toute la chaîne — de la pharmacie jusqu&apos;au patient —
+              avec rigueur et traçabilité.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {solutions.map(({ icon: Icon, title, desc, color }) => (
+              <div key={title} className="card p-8 group">
+                <div
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110"
+                  style={{ background: "rgba(26,181,213,0.08)", border: "1.5px solid rgba(26,181,213,0.2)" }}
+                >
+                  <Icon className="w-7 h-7" style={{ color }} />
+                </div>
+                <h3 className="text-xl font-bold text-[#0B3A50] mb-3">{title}</h3>
+                <p className="text-[#6B7280] leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-10">
+            <Link href="/services" className="btn btn-outline">
+              Découvrir tous nos services
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
-      </div>
-    </section>
-  )
-}
+      </section>
 
-// ── Page principale ─────────────────────────────────────────────
-export default function HomePage() {
-  return (
-    <main>
-      <HeroSection />
-      <ProblemSection />
-      <SolutionSection />
-      <HowItWorksSection />
-      <StatsSection />
-      <CredibilitySection />
-      <CtaSection />
-    </main>
+      {/* ── 4. FONCTIONNEMENT ────────────────────────────────────────── */}
+      <section className="section-py bg-white">
+        <div className="container-xl">
+          <div className="text-center mb-16">
+            <div className="badge badge-navy mb-5">Processus</div>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-[#0B3A50] mb-4">
+              Comment ça marche ?
+            </h2>
+            <p className="text-[#6B7280] max-w-lg mx-auto text-lg">
+              Un process rodé en 4 étapes pour garantir la livraison de vos produits pharmaceutiques.
+            </p>
+          </div>
+
+          {/* Timeline desktop */}
+          <div className="hidden md:block timeline-wrap">
+            {steps.map(({ num, icon: Icon, title, desc }) => (
+              <div key={num} className="timeline-step">
+                <div className="timeline-dot">
+                  <span className="text-sm font-bold">{num}</span>
+                </div>
+                <div className="mt-4 text-center px-4">
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-3"
+                    style={{ background: "rgba(26,181,213,0.08)" }}
+                  >
+                    <Icon className="w-5 h-5" style={{ color: "var(--cyan)" }} />
+                  </div>
+                  <h3 className="font-bold text-[#0B3A50] mb-2">{title}</h3>
+                  <p className="text-sm text-[#6B7280] leading-relaxed">{desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Timeline mobile — vertical */}
+          <div className="md:hidden flex flex-col gap-6">
+            {steps.map(({ num, icon: Icon, title, desc }) => (
+              <div key={num} className="flex gap-5 items-start">
+                <div className="timeline-dot flex-shrink-0">
+                  <span className="text-sm font-bold">{num}</span>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <Icon className="w-4 h-4" style={{ color: "var(--cyan)" }} />
+                    <h3 className="font-bold text-[#0B3A50]">{title}</h3>
+                  </div>
+                  <p className="text-sm text-[#6B7280] leading-relaxed">{desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link href="/comment-ca-marche" className="btn btn-outline">
+              En savoir plus sur le processus
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 5. CHIFFRES CLÉS ─────────────────────────────────────────── */}
+      <section className="section-py bg-navy-gradient text-white">
+        <div className="container-xl">
+          <div className="text-center mb-14">
+            <div
+              className="badge mb-5"
+              style={{ background: "rgba(26,181,213,0.2)", color: "#7DE3F5" }}
+            >
+              Chiffres clés
+            </div>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">
+              Des performances qui parlent d&apos;elles-mêmes
+            </h2>
+            <p className="max-w-lg mx-auto text-lg" style={{ color: "rgba(255,255,255,0.65)" }}>
+              AGC Logistics, c&apos;est la rigueur au service de la santé — mesurée, prouvée et certifiée.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {stats.map(({ value, label }) => (
+              <div
+                key={label}
+                className="text-center p-10 rounded-2xl"
+                style={{
+                  background: "rgba(255,255,255,0.05)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  backdropFilter: "blur(8px)",
+                }}
+              >
+                <div className="stat-number mb-3" style={{ color: "var(--cyan)" }}>
+                  {value}
+                </div>
+                <p className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.7)" }}>
+                  {label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 6. CRÉDIBILITÉ / CONFORMITÉ ──────────────────────────────── */}
+      <section className="section-py bg-white">
+        <div className="container-xl">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <div className="badge badge-green mb-6">Conformité & Réglementation</div>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-[#0B3A50] mb-6">
+                Une activité encadrée et certifiée
+              </h2>
+              <p className="text-[#374151] text-lg mb-8 leading-relaxed">
+                AGC Logistics opère dans le strict respect des réglementations pharmaceutiques françaises
+                et européennes. Notre engagement : zéro compromis sur la sécurité des produits de santé.
+              </p>
+
+              <ul className="flex flex-col gap-4">
+                {credentials.map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <CheckCircle2
+                      className="w-5 h-5 flex-shrink-0 mt-0.5"
+                      style={{ color: "#1E8E5A" }}
+                    />
+                    <span className="text-[#374151]">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="flex justify-center">
+              <div
+                className="w-full max-w-sm rounded-3xl p-10 text-white text-center"
+                style={{
+                  background: "linear-gradient(145deg, #0B3A50 0%, #0D5870 100%)",
+                  boxShadow: "0 20px 60px rgba(11,58,80,0.25)",
+                }}
+              >
+                <div
+                  className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6"
+                  style={{ background: "rgba(26,181,213,0.15)" }}
+                >
+                  <ShieldCheck className="w-10 h-10" style={{ color: "var(--cyan)" }} />
+                </div>
+                <h3 className="text-2xl font-extrabold mb-3">BPD Certifié</h3>
+                <p className="text-sm mb-8" style={{ color: "rgba(255,255,255,0.65)" }}>
+                  Bonnes Pratiques de Distribution pharmaceutique respectées à chaque étape
+                  de la chaîne logistique.
+                </p>
+                <div
+                  className="rounded-xl p-4 text-left"
+                  style={{
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                  }}
+                >
+                  <div
+                    className="flex justify-between text-xs mb-2"
+                    style={{ color: "rgba(255,255,255,0.5)" }}
+                  >
+                    <span>Taux de conformité</span>
+                    <span style={{ color: "var(--cyan)" }}>100%</span>
+                  </div>
+                  <div
+                    className="w-full h-2 rounded-full"
+                    style={{ background: "rgba(255,255,255,0.1)" }}
+                  >
+                    <div
+                      className="h-full rounded-full"
+                      style={{ width: "100%", background: "var(--cyan)" }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 7. ZONES COUVERTES ───────────────────────────────────────── */}
+      <section className="section-py" style={{ background: "var(--bg)" }}>
+        <div className="container-xl text-center">
+          <div className="badge badge-cyan mb-5">
+            <MapPin className="w-3 h-3" />
+            Zones de livraison
+          </div>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-[#0B3A50] mb-4">
+            Toute la Martinique couverte
+          </h2>
+          <p className="text-[#6B7280] max-w-lg mx-auto text-lg mb-10">
+            Du nord au sud, de Fort-de-France aux communes les plus reculées, AGC Logistics livre
+            partout sur l&apos;île.
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-3">
+            {zones.map((zone) => (
+              <span key={zone} className="badge badge-navy">
+                {zone}
+              </span>
+            ))}
+          </div>
+
+          <div className="mt-8">
+            <Link href="/zones-couvertes" className="btn btn-outline">
+              Voir la carte complète
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 8. TÉMOIGNAGES ───────────────────────────────────────────── */}
+      <section className="section-py bg-white">
+        <div className="container-xl">
+          <div className="text-center mb-14">
+            <div className="badge badge-navy mb-5">Pharmacies partenaires</div>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-[#0B3A50] mb-4">
+              Ils nous font confiance
+            </h2>
+            <p className="text-[#6B7280] max-w-lg mx-auto text-lg">
+              Les pharmacies et établissements de santé de Martinique choisissent AGC Logistics
+              pour leur distribution pharmaceutique.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {testimonials.map(({ quote, name, location }) => (
+              <div key={name} className="card p-8 flex flex-col gap-5">
+                <div className="flex gap-1">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <svg key={i} width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <path
+                        d="M8 1L10 6H15L11 9.5L12.5 15L8 12L3.5 15L5 9.5L1 6H6L8 1Z"
+                        fill="#F59E0B"
+                      />
+                    </svg>
+                  ))}
+                </div>
+                <p className="text-[#374151] italic leading-relaxed flex-1">
+                  &ldquo;{quote}&rdquo;
+                </p>
+                <div>
+                  <div className="font-semibold text-[#0B3A50] text-sm">{name}</div>
+                  <div className="text-xs text-[#6B7280] flex items-center gap-1 mt-1">
+                    <MapPin className="w-3 h-3" />
+                    {location}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 9. CTA FINAL ─────────────────────────────────────────────── */}
+      <section className="section-py bg-navy-gradient text-white">
+        <div className="container-xl text-center">
+          <div
+            className="badge mb-6"
+            style={{ background: "rgba(242,99,85,0.2)", color: "#FAA59D" }}
+          >
+            Prêt à démarrer ?
+          </div>
+          <h2
+            className="text-3xl md:text-5xl font-extrabold text-white mb-6"
+            style={{ letterSpacing: "-0.02em" }}
+          >
+            Sécurisez votre chaîne
+            <br className="hidden md:block" /> logistique pharmaceutique
+          </h2>
+          <p
+            className="text-lg mb-10 max-w-xl mx-auto"
+            style={{ color: "rgba(255,255,255,0.70)" }}
+          >
+            Contactez AGC Logistics pour un audit gratuit de votre chaîne de distribution
+            et un devis personnalisé sous 24h.
+          </p>
+
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Link href="/contact" className="btn btn-primary text-base px-8 py-4">
+              Demander un devis gratuit
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <a
+              href={`tel:${CONTACT_PHONE}`}
+              className="btn btn-white-outline text-base px-8 py-4"
+            >
+              Nous appeler directement
+            </a>
+          </div>
+
+          <p className="text-xs mt-8" style={{ color: "rgba(255,255,255,0.35)" }}>
+            Réponse garantie sous 24h — Devis gratuit et sans engagement
+          </p>
+        </div>
+      </section>
+    </>
   )
 }

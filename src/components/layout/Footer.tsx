@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Phone, Mail, MapPin, Shield } from "lucide-react"
+import { Phone, Mail, MapPin, ShieldCheck } from "lucide-react"
 import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_ADDRESS } from "@/lib/constants"
 
 const footerLinks = {
@@ -27,7 +27,7 @@ export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer style={{ background: "#0B3C5D" }} className="text-white" role="contentinfo">
+    <footer style={{ background: "#0B3A50" }} className="text-white" role="contentinfo">
       <div className="container-xl py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Colonne 1 : Marque */}
@@ -36,9 +36,9 @@ export default function Footer() {
               <Image
                 src="/logo-agc.png"
                 alt="AGC Logistics"
-                width={130}
-                height={38}
-                className="h-10 w-auto brightness-0 invert"
+                width={160}
+                height={46}
+                className="h-12 w-auto brightness-0 invert"
               />
             </Link>
             <p className="text-sm leading-relaxed mb-6" style={{ color: "rgba(255,255,255,0.65)" }}>
@@ -51,7 +51,7 @@ export default function Footer() {
                 className="flex items-center gap-2.5 text-sm hover:text-white transition-colors"
                 style={{ color: "rgba(255,255,255,0.65)" }}
               >
-                <Phone className="w-4 h-4 flex-shrink-0 text-[#1F6FEB]" />
+                <Phone className="w-4 h-4 flex-shrink-0" style={{ color: "var(--cyan)" }} />
                 {CONTACT_PHONE}
               </a>
               <a
@@ -59,14 +59,14 @@ export default function Footer() {
                 className="flex items-center gap-2.5 text-sm hover:text-white transition-colors"
                 style={{ color: "rgba(255,255,255,0.65)" }}
               >
-                <Mail className="w-4 h-4 flex-shrink-0 text-[#1F6FEB]" />
+                <Mail className="w-4 h-4 flex-shrink-0" style={{ color: "var(--cyan)" }} />
                 {CONTACT_EMAIL}
               </a>
               <div
                 className="flex items-start gap-2.5 text-sm"
                 style={{ color: "rgba(255,255,255,0.65)" }}
               >
-                <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5 text-[#1F6FEB]" />
+                <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: "var(--cyan)" }} />
                 {CONTACT_ADDRESS}
               </div>
             </div>
@@ -130,15 +130,16 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
+
             {/* Badge conformité */}
             <div
               className="flex items-start gap-3 p-4 rounded-xl"
               style={{
-                background: "rgba(255,255,255,0.07)",
+                background: "rgba(255,255,255,0.06)",
                 border: "1px solid rgba(255,255,255,0.12)",
               }}
             >
-              <Shield className="w-5 h-5 text-[#1E8E5A] flex-shrink-0 mt-0.5" />
+              <ShieldCheck className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: "#1E8E5A" }} />
               <div>
                 <div className="text-xs font-semibold text-white mb-1">
                   Conforme réglementation
