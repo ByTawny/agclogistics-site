@@ -2,10 +2,15 @@
 
 import React, { useState, useEffect } from "react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { NAV_LINKS } from "@/lib/constants"
-import { Menu, X, Package2 } from "lucide-react"
+import Image from "next/image"
+import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
+
+const NAV_ITEMS = [
+  { label: "Services", href: "/services" },
+  { label: "Fonctionnement", href: "/comment-ca-marche" },
+  { label: "Contact", href: "/contact" },
+]
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
@@ -22,53 +27,51 @@ export default function Header() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-[#e2e8f0]"
-          : "bg-white/80 backdrop-blur-sm"
+          ? "bg-white shadow-sm border-b border-[#E2E8F0]"
+          : "bg-white/90 backdrop-blur-md"
       )}
     >
       <div className="container-xl">
         <nav className="flex items-center justify-between h-16" aria-label="Navigation principale">
           {/* Logo */}
-          <Link
-            href="/"
-            className="flex items-center gap-2 font-bold text-xl text-[#0f172a] hover:text-[#0b5fff] transition-colors"
-            aria-label="AGC Logistics - Accueil"
-          >
-            <div className="w-8 h-8 bg-[#0b5fff] rounded-lg flex items-center justify-center">
-              <Package2 className="w-5 h-5 text-white" />
-            </div>
-            <span>
-              AGC <span className="text-[#0b5fff]">Logistics</span>
-            </span>
+          <Link href="/" className="flex items-center" aria-label="AGC Logistics - Accueil">
+            <Image
+              src="/logo-agc.png"
+              alt="AGC Logistics"
+              width={140}
+              height={40}
+              className="h-10 w-auto object-contain"
+              priority
+            />
           </Link>
 
           {/* Desktop Nav */}
-          <ul className="hidden lg:flex items-center gap-6" role="list">
-            {NAV_LINKS.map((link) => (
-              <li key={link.href}>
+          <ul className="hidden lg:flex items-center gap-8" role="list">
+            {NAV_ITEMS.map((item) => (
+              <li key={item.href}>
                 <Link
-                  href={link.href}
-                  className="text-sm font-medium text-[#475569] hover:text-[#0b5fff] transition-colors"
+                  href={item.href}
+                  className="text-sm font-medium text-[#374151] hover:text-[#1F6FEB] transition-colors"
                 >
-                  {link.label}
+                  {item.label}
                 </Link>
               </li>
             ))}
           </ul>
 
           {/* CTA Desktop */}
-          <div className="hidden lg:flex items-center gap-3">
-            <Button variant="outline" size="sm" asChild>
-              <Link href="/contact">Nous contacter</Link>
-            </Button>
-            <Button size="sm" asChild>
-              <Link href="/contact?type=pharmacie">Devis pharmacie</Link>
-            </Button>
+          <div className="hidden lg:flex items-center">
+            <Link
+              href="/contact"
+              className="btn-primary text-sm"
+            >
+              Demander un rendez-vous
+            </Link>
           </div>
 
           {/* Mobile menu button */}
           <button
-            className="lg:hidden p-2 rounded-lg text-[#475569] hover:bg-[#f8fafc] transition-colors"
+            className="lg:hidden p-2 rounded-lg text-[#374151] hover:bg-[#F5F7FA] transition-colors"
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={isOpen}
@@ -79,31 +82,28 @@ export default function Header() {
 
         {/* Mobile menu */}
         {isOpen && (
-          <div className="lg:hidden border-t border-[#e2e8f0] py-4 bg-white">
+          <div className="lg:hidden border-t border-[#E2E8F0] py-4 bg-white">
             <ul className="flex flex-col gap-1" role="list">
-              {NAV_LINKS.map((link) => (
-                <li key={link.href}>
+              {NAV_ITEMS.map((item) => (
+                <li key={item.href}>
                   <Link
-                    href={link.href}
-                    className="block px-3 py-2.5 text-sm font-medium text-[#475569] hover:text-[#0b5fff] hover:bg-[#f8fafc] rounded-lg transition-colors"
+                    href={item.href}
+                    className="block px-3 py-3 text-sm font-medium text-[#374151] hover:text-[#1F6FEB] hover:bg-[#F5F7FA] rounded-lg transition-colors"
                     onClick={() => setIsOpen(false)}
                   >
-                    {link.label}
+                    {item.label}
                   </Link>
                 </li>
               ))}
             </ul>
-            <div className="mt-4 flex flex-col gap-2 px-3">
-              <Button variant="outline" asChild>
-                <Link href="/contact" onClick={() => setIsOpen(false)}>
-                  Nous contacter
-                </Link>
-              </Button>
-              <Button asChild>
-                <Link href="/contact?type=pharmacie" onClick={() => setIsOpen(false)}>
-                  Devis pharmacie
-                </Link>
-              </Button>
+            <div className="mt-4 px-3">
+              <Link
+                href="/contact"
+                className="btn-primary w-full justify-center text-sm"
+                onClick={() => setIsOpen(false)}
+              >
+                Demander un rendez-vous
+              </Link>
             </div>
           </div>
         )}
